@@ -37,6 +37,7 @@
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CUi.cpp" />
+    <ClCompile Include="CVector.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +60,7 @@
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CUi.h" />
+    <ClInclude Include="CVector.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
