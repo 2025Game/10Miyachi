@@ -7,11 +7,6 @@
 */
 class CVector {
 public:
-	//デフォルトコンストラクタ
-	CVector();
-	//コンストラクタ
-	//CVector(X座標, Y座標, Z座標)
-	CVector(float x, float y, float z);
 	//各軸での値の設定
 	//Set(X座標, Y座標, Z座標)
 	void Set(float x, float y, float z);
