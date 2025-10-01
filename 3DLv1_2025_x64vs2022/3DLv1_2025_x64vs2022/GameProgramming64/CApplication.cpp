@@ -24,7 +24,7 @@ CCharacterManager* CApplication::CharacterManager()
 
 void CApplication::Start()
 {
-
+	mEye = CVector(1.0f, 2.0f, 3.0f);
 }
 
 void CApplication::Update()
@@ -40,9 +40,34 @@ void CApplication::Update()
 	//頂点3の座標を設定する
 	v2.Set(0.0f, 0.0f, -0.5f);
 
+	if (mInput.Key('J'))
+	{
+		mEye = mEye - CVector(0.1f, 0.0f, 0.0f);
+	}
+	if (mInput.Key('L'))
+	{
+		mEye = mEye + CVector(0.1f, 0.0f, 0.0f);
+	}
+	if (mInput.Key('I'))
+	{
+		mEye = mEye - CVector(0.0f, 0.0f, 0.1f);
+	}
+	if (mInput.Key('K'))
+	{
+		mEye = mEye + CVector(0.0f, 0.0f, 0.1f);
+	}
+	if (mInput.Key('M'))
+	{
+		mEye = mEye - CVector(0.0f, 0.1f, 0.0f);
+	}
+	if (mInput.Key('O'))
+	{
+		mEye = mEye + CVector(0.0f, 0.1f, 0.0f);
+	}
+
 	//視点の設定
 	//gluLookAt(視点X, 視点Y, 視点Z, 中心X, 中心Y, 中心Z, 上向X, 上向Y, 上向Z)
-	gluLookAt(1.0f, 2.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gluLookAt(mEye.X(), mEye.Y(), mEye.Z(), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
 	//描画開始
 	//glBegin(形)
