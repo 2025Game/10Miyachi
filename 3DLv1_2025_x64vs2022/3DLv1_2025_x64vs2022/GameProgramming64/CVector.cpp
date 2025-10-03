@@ -26,13 +26,15 @@ CVector::CVector()
 	: mX(0.0f)
 	, mY(0.0f)
 	, mZ(0.0f)
-{}
+{
+}
 
 CVector::CVector(float x, float y, float z)
 	: mX(x)
 	, mY(y)
 	, mZ(z)
-{}
+{
+}
 
 //+演算子のオーバーロード
 //CVector + CVector の演算結果を返す

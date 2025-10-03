@@ -5,7 +5,8 @@
  ベクトルクラス
  ベクトルデータを扱います
 */
-class CVector {
+class CVector
+{
 public:
 	//-演算子のオーバーロード
 	//CVector - CVector の演算結果を返す

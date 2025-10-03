@@ -6,7 +6,8 @@
 /*
 三角形クラス
 */
-class CTriangle {
+class CTriangle
+{
 public:
 	//頂点座標設定
 	//Vertex(頂点1, 頂点2, 頂点3)

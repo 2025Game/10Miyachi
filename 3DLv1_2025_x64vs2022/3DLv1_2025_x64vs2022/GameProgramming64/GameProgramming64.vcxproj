@@ -30,6 +30,7 @@
     <ClCompile Include="CFont.cpp" />
     <ClCompile Include="CGame.cpp" />
     <ClCompile Include="CInput.cpp" />
+    <ClCompile Include="CModel.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayer2.cpp" />
     <ClCompile Include="CPoint.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CInput.h" />
     <ClInclude Include="CMiss.h" />
+    <ClInclude Include="CModel.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayer2.h" />
     <ClInclude Include="CPoint.h" />
