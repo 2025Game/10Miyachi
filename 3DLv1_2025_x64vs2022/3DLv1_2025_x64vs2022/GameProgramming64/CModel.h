@@ -12,6 +12,9 @@
 class CModel
 {
 public:
+	//•`‰æ
+	//Render(s—ñ)
+	void Render(const CMatrix& m);
 	~CModel();
 	//•`‰æ
 	void Render();
