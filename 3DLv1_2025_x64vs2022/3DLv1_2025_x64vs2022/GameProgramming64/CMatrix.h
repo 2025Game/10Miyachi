@@ -8,6 +8,15 @@
 class CMatrix
 {
 public:
+	//回転行列（X軸）の作成
+	//RotateX(角度)
+	CMatrix RotateX(float degree);
+	//回転行列（Y軸）の作成
+	//RotateY(角度)
+	CMatrix RotateY(float degree);
+	//回転行列（Z軸）の作成
+	//RotateZ(角度)
+	CMatrix RotateZ(float degree);
 	//行列値の取得
 	//M(行, 列)
 	//mM[行][列]を取得
