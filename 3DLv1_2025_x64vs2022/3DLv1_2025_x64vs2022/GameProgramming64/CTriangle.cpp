@@ -65,9 +65,14 @@ void CTriangle::Render(const CMatrix& m)
 	mV[0] = CTriangle::mV[0] * m;
 	mV[1] = CTriangle::mV[1] * m;
 	mV[2] = CTriangle::mV[2] * m;
-	mN[0] = CTriangle::mN[0] * m;
-	mN[1] = CTriangle::mN[1] * m;
-	mN[2] = CTriangle::mN[2] * m;
+	//ñ@ê¸ÇÕà⁄ìÆílÇ0
+	CMatrix mat = m;
+	mat.M(3, 0, 0.0f);
+	mat.M(3, 1, 0.0f);
+	mat.M(3, 2, 0.0f);
+	mN[0] = CTriangle::mN[0] * mat;
+	mN[1] = CTriangle::mN[1] * mat;
+	mN[2] = CTriangle::mN[2] * mat;
 	glBegin(GL_TRIANGLES);
 	glNormal3f(mN[0].X(), mN[0].Y(), mN[0].Z());
 	glTexCoord2f(mUv[0].X(), mUv[0].Y());
