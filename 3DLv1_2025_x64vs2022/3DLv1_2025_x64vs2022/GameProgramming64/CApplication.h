@@ -10,6 +10,7 @@
 #include "CGame.h"
 #include "CVector.h"
 #include "CModel.h"
+#include "CCharacter3.h"
 
 class CApplication
 {
@@ -29,6 +30,8 @@ public:
 	//繰り返し実行するプログラム
 	void Update();
 private:
+	CCharacter3 mPlayer;
+	CCharacter3 mCharacter;
 	CModel mBackGround; //背景モデル
 	//モデルクラスのインスタンス作成
 	CModel mModel;
