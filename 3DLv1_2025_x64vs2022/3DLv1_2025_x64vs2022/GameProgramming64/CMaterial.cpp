@@ -23,6 +23,7 @@ char* strncpy(char* str1, const char* str2, int len)
 
 //デフォルトコンストラクタ
 CMaterial::CMaterial()
+       :mVertexNum(0)
 {
 	//名前を0で埋め
 	memset(mName, 0, sizeof(mName));
@@ -84,4 +85,14 @@ void CMaterial::Disabled()
 CTexture* CMaterial::Texture()
 {
 	return &mTexture;
+}
+
+void CMaterial::VertexNum(int num)
+{
+	mVertexNum = num;
+}
+
+int CMaterial::VertexNum()
+{
+	return mVertexNum;
 }

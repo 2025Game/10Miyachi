@@ -129,3 +129,8 @@ const CMatrix CMatrix::operator*(const CMatrix& m) const
 	t.mM[3][3] = mM[3][0] * m.mM[0][3] + mM[3][1] * m.mM[1][3] + mM[3][2] * m.mM[2][3] + mM[3][3] * m.mM[3][3];
 	return t;
 }
+
+float* CMatrix::M() const
+{
+	return (float*)mM[0];
+}

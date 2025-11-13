@@ -179,5 +179,8 @@
     <ClInclude Include="CCharacter3.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="CVertex.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

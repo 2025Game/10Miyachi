@@ -10,6 +10,18 @@
 class CTriangle
 {
 public:
+	//頂点座標を得る
+	const CVector& V0() const; //mV[0]を返します
+	const CVector& V1() const; //mV[1]を返します
+	const CVector& V2() const; //mV[2]を返します
+	//法線を得る
+	const CVector& N0() const; //mN[0]を返します
+	const CVector& N1() const; //mN[1]を返します
+	const CVector& N2() const; //mN[2]を返します
+	//UVを得る
+	const CVector& U0() const; //mUv[0]を返します
+	const CVector& U1() const; //mUv[1]を返します
+	const CVector& U2() const; //mUv[2]を返します
 	//描画
     //Render(行列)
 	void Render(const CMatrix& m);
