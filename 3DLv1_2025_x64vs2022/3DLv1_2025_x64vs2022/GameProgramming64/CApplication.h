@@ -31,7 +31,6 @@ public:
 	void Update();
 private:
 	CPlayer mPlayer;
-	CCharacter3 mCharacter;
 	CModel mBackGround; //背景モデル
 	//モデルクラスのインスタンス作成
 	CModel mModel;
