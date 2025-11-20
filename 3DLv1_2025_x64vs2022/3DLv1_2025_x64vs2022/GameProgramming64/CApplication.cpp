@@ -94,4 +94,7 @@ void CApplication::Update()
 	mPlayer.Render();
 
 	mBackGround.Render();
+
+	mPlayer.bullet.Update();
+	mPlayer.bullet.Render();
 }
