@@ -28,6 +28,12 @@ CCharacterManager* CApplication::CharacterManager()
 	return &mCharacterManager;
 }
 
+CTaskManager CApplication::mTaskManager;
+CTaskManager* CApplication::TaskManager()
+{
+	return &mTaskManager;
+}
+
 void CApplication::Start()
 {
 	//モデルファイルの入力
@@ -95,6 +101,8 @@ void CApplication::Update()
 
 	mBackGround.Render();
 
-	mPlayer.bullet.Update();
-	mPlayer.bullet.Render();
+	//タスクマネージャの更新
+	mTaskManager.Update();
+	//タスクマネージャの描画
+	mTaskManager.Render();
 }
