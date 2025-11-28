@@ -8,6 +8,8 @@
 #include "CMatrix.h"
 #include "CTransform.h"
 
+//敵輸送機モデル
+#define MODEL_C5 "res\\c5.obj", "res\\c5.mtl"
 //モデルデータの指定
 #define MODEL_OBJ "res\\f14.obj", "res\\f14.mtl"
 #define SOUND_BGM "res\\mario.wav" //BGM音声ファイル
@@ -36,6 +38,11 @@ CTaskManager* CApplication::TaskManager()
 
 void CApplication::Start()
 {
+	//C5モデルの読み込み
+	mModelC5.Load(MODEL_C5);
+	//敵機のインスタンス作成
+	new CEnemy(&mModelC5, CVector(0.0f, 10.0f, -100.0f), CVector(), CVector(0.1f, 0.1f, 0.1f));
+	new CEnemy(&mModelC5, CVector(30.0f, 10.0f, -130.0f), CVector(), CVector(0.1f, 0.1f, 0.1f));
 	//モデルファイルの入力
 	mModel.Load(MODEL_OBJ);
 	mBackGround.Load(MODEL_BACKGROUND);

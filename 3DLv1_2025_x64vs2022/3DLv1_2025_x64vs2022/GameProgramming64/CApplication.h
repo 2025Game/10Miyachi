@@ -38,6 +38,8 @@ private:
 	CModel mBackGround; //背景モデル
 	//モデルクラスのインスタンス作成
 	CModel mModel;
+	//C5モデル
+	CModel mModelC5;
 	CVector mEye;
 	CSound mSoundBgm;
 	CSound mSoundOver;
