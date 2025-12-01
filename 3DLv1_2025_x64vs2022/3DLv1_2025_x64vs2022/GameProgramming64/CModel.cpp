@@ -78,7 +78,6 @@ void CModel::Load(const char* obj, const char* mtl)
 	int idx = 0;
 	while (fgets(buf, sizeof(buf), fp) != NULL)
 	{
-		printf("%s", buf);
 		//データを分割する
 		char str[4][64] = { "", "", "", "" };
 		//文字列からデータを4つ変数へ代入する
@@ -145,7 +144,6 @@ void CModel::Load(const char* obj, const char* mtl)
 	//ファイルの最後になるとNULLを返す
 	while (fgets(buf, sizeof(buf), fp) != NULL)
 	{
-		printf("%s", buf);
 		//データを分割する
 		char str[4][64] = { "", "", "", "" };
 		//文字列からデータを4つ変数へ代入する

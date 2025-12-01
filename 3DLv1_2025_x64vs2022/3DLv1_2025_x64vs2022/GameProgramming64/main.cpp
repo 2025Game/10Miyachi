@@ -65,8 +65,10 @@ void idle() {
 	display();
 }
 
-int main(void)
+int main(int argc, char** argv)
 {
+	glutInit(&argc, argv);
+
 	GLFWwindow* window;
 
 	/* Initialize the library */
