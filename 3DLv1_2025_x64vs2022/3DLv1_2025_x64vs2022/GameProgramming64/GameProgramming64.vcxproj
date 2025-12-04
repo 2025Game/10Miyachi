@@ -27,6 +27,7 @@
     <ClCompile Include="CCharacter3.cpp" />
     <ClCompile Include="CCharacterManager.cpp" />
     <ClCompile Include="CCollider.cpp" />
+    <ClCompile Include="CCollisionManager.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEnemy2.cpp" />
     <ClCompile Include="CFont.cpp" />
@@ -57,6 +58,7 @@
     <ClInclude Include="CCharacter3.h" />
     <ClInclude Include="CCharacterManager.h" />
     <ClInclude Include="CCollider.h" />
+    <ClInclude Include="CCollisionManager.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEnemy2.h" />
     <ClInclude Include="CFont.h" />

@@ -12,14 +12,6 @@
 class CEnemy : public CCharacter3
 {
 public:
-	//確認用メソッド　削除予定
-	void Render()
-	{
-		CCharacter3::Render();
-		mCollider1.Render();
-		mCollider2.Render();
-		mCollider3.Render();
-	}
 	//コンストラクタ
 	//CEnemy(モデル, 位置, 回転, 拡縮)
 	CEnemy(CModel* model, const CVector& position, const CVector& rotation, const CVector& scale);

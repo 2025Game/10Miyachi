@@ -16,7 +16,6 @@
 class CApplication
 {
 public:
-	static CTaskManager* TaskManager();
 	static CTexture* Texture();
 	static CCharacterManager* CharacterManager();
 	enum class EState
@@ -32,8 +31,6 @@ public:
 	//繰り返し実行するプログラム
 	void Update();
 private:
-	static CTaskManager mTaskManager;
-
 	CPlayer mPlayer;
 	CModel mBackGround; //背景モデル
 	//モデルクラスのインスタンス作成
