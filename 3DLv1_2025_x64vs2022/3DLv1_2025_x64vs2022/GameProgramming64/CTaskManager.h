@@ -10,6 +10,7 @@
 */
 class CTaskManager
 {
+	friend class CTaskManager;
 public:
 	//インスタンスの取得
 	static CTaskManager* Instance();
