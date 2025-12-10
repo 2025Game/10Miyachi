@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CApplication.cpp" />
+    <ClCompile Include="CBillBoard.cpp" />
     <ClCompile Include="CBlock.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCamera.cpp" />
@@ -51,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CApplication.h" />
+    <ClInclude Include="CBillBoard.h" />
     <ClInclude Include="CBlock.h" />
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCamera.h" />

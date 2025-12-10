@@ -16,6 +16,8 @@
 class CApplication
 {
 public:
+	//モデルビュー行列の取得
+	static const CMatrix& ModelViewInverse();
 	static CTexture* Texture();
 	static CCharacterManager* CharacterManager();
 	enum class EState
@@ -31,6 +33,8 @@ public:
 	//繰り返し実行するプログラム
 	void Update();
 private:
+	//モデルビューの逆行列
+	static CMatrix mModelViewInverse;
 	CPlayer mPlayer;
 	CModel mBackGround; //背景モデル
 	//モデルクラスのインスタンス作成
