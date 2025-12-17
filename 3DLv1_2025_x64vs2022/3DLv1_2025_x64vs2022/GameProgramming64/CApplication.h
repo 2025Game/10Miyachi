@@ -12,6 +12,7 @@
 #include "CModel.h"
 #include "CCharacter3.h"
 #include "CTaskManager.h"
+#include "CColliderTriangle.h"
 
 class CApplication
 {
@@ -33,6 +34,9 @@ public:
 	//繰り返し実行するプログラム
 	void Update();
 private:
+	//三角コライダの作成
+	CColliderTriangle mColliderTriangle;
+	CColliderTriangle mColliderTriangle2;
 	//モデルビューの逆行列
 	static CMatrix mModelViewInverse;
 	CPlayer mPlayer;
