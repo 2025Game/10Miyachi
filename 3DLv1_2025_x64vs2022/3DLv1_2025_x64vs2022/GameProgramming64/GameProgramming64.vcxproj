@@ -28,6 +28,7 @@
     <ClCompile Include="CCharacter3.cpp" />
     <ClCompile Include="CCharacterManager.cpp" />
     <ClCompile Include="CCollider.cpp" />
+    <ClCompile Include="CColliderLine.cpp" />
     <ClCompile Include="CColliderTriangle.cpp" />
     <ClCompile Include="CCollisionManager.cpp" />
     <ClCompile Include="CEffect.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="CCharacter3.h" />
     <ClInclude Include="CCharacterManager.h" />
     <ClInclude Include="CCollider.h" />
+    <ClInclude Include="CColliderLine.h" />
     <ClInclude Include="CColliderTriangle.h" />
     <ClInclude Include="CCollisionManager.h" />
     <ClInclude Include="CEffect.h" />

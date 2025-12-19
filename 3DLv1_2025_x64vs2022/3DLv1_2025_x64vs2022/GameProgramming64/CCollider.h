@@ -19,6 +19,7 @@ public:
 	{
 		ESPHERE,//球コライダ
 		ETRIANGLE,//三角コライダ
+		ELINE, //線分コライダ
 	};
 	//デフォルトコンストラクタ
 	CCollider();
