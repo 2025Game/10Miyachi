@@ -6,6 +6,7 @@
 #include "CTriangle.h"
 #include "CMaterial.h"
 #include "CVertex.h"
+
 /*
 モデルクラス
 モデルデータの入力や表示
@@ -13,6 +14,7 @@
 class CModel
 {
 public:
+	const std::vector<CTriangle>& Triangles() const;
 	//描画
 	//Render(行列)
 	void Render(const CMatrix& m);

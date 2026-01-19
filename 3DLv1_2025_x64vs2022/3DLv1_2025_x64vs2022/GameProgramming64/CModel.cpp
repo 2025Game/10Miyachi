@@ -44,6 +44,11 @@ CModel::~CModel()
 	delete[] mpVertexes;
 }
 
+const std::vector<CTriangle>& CModel::Triangles() const
+{
+	return mTriangles;
+}
+
 //モデルファイルの入力
 //Load(モデルファイル名, マテリアルファイル名)
 void CModel::Load(const char* obj, const char* mtl)

@@ -29,6 +29,7 @@
     <ClCompile Include="CCharacterManager.cpp" />
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CColliderLine.cpp" />
+    <ClCompile Include="CColliderMesh.cpp" />
     <ClCompile Include="CColliderTriangle.cpp" />
     <ClCompile Include="CCollisionManager.cpp" />
     <ClCompile Include="CEffect.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="CCharacterManager.h" />
     <ClInclude Include="CCollider.h" />
     <ClInclude Include="CColliderLine.h" />
+    <ClInclude Include="CColliderMesh.h" />
     <ClInclude Include="CColliderTriangle.h" />
     <ClInclude Include="CCollisionManager.h" />
     <ClInclude Include="CEffect.h" />
