@@ -35,6 +35,7 @@
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEnemy2.cpp" />
+    <ClCompile Include="CEnemy3.cpp" />
     <ClCompile Include="CFont.cpp" />
     <ClCompile Include="CGame.cpp" />
     <ClCompile Include="CInput.cpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="CEffect.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEnemy2.h" />
+    <ClInclude Include="CEnemy3.h" />
     <ClInclude Include="CFont.h" />
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CInput.h" />
