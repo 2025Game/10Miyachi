@@ -3,9 +3,9 @@
 #include "glut.h"
 #include "GLFW/glfw3.h"
 #include "main.h"
-#include "CApplication.h"
+#include "CApplication3.h"
 
-CApplication gApplication;
+CApplication3 gApplication;
 
 /* displayä÷êî
 1ïbä‘Ç…60âÒé¿çsÇ≥ÇÍÇÈ
