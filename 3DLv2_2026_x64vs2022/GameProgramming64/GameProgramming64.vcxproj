@@ -39,6 +39,7 @@
     <ClCompile Include="CEnemy3.cpp" />
     <ClCompile Include="CFont.cpp" />
     <ClCompile Include="CGame.cpp" />
+    <ClCompile Include="CGameScene.cpp" />
     <ClCompile Include="CInput.cpp" />
     <ClCompile Include="CMaterial.cpp" />
     <ClCompile Include="CMatrix.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="CEnemy3.h" />
     <ClInclude Include="CFont.h" />
     <ClInclude Include="CGame.h" />
+    <ClInclude Include="CGameScene.h" />
     <ClInclude Include="CInput.h" />
     <ClInclude Include="CMaterial.h" />
     <ClInclude Include="CMatrix.h" />

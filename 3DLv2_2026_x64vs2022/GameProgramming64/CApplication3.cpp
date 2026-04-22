@@ -1,4 +1,5 @@
 #include "CApplication3.h"
+#include "CGameScene.h"
 
 CApplication3::CApplication3()
 {
@@ -11,7 +12,7 @@ CApplication3::~CApplication3()
 void CApplication3::Start()
 {
 	//タイトルシーンのインスタンスを作成
-	mpScene = std::make_unique<CTitleScene>();
+	mpScene = std::make_unique<CGameScene>();
 	mpScene->Load(); //タイトルシーンのロード
 }
 
