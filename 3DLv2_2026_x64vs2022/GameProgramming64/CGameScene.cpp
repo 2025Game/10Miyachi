@@ -3,6 +3,7 @@
 #include "CTaskManager.h"
 #include "CXCharacter.h"
 #include "CXPlayer.h"
+#include "CCollisionManager.h"
 
 //背景モデルデータの指定
 #define MODEL_BACKGROUND "res\\sky.obj", "res\\sky.mtl"
@@ -23,6 +24,7 @@ void CGameScene::Load()
 	mPlayer.Load(MODEL_FILE);
 	CXPlayer* player = new CXPlayer();
 	player->Init(&mPlayer);
+	mColliderMesh.Set(nullptr, nullptr, &mBackGround);
 }
 
 void CGameScene::Update()
@@ -31,6 +33,10 @@ void CGameScene::Update()
 	gluLookAt(1.0f, 2.0f, 10.0f, 0.0f, 2.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	//全キャラクタの更新
 	CTaskManager::Instance()->Update();
+	//衝突処理の呼び出し
+	CTaskManager::Instance()->Collision();
 	//課題 全キャラクタの描画
 	CTaskManager::Instance()->Render();
+	//コライダの描画
+	CCollisionManager::Instance()->Render();
 }
