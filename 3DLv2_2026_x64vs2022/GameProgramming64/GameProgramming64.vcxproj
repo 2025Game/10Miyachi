@@ -48,6 +48,7 @@
     <ClCompile Include="CMyShader.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayer2.cpp" />
+    <ClCompile Include="CPlayerIdle.cpp" />
     <ClCompile Include="CPoint.cpp" />
     <ClCompile Include="CRectangle.cpp" />
     <ClCompile Include="CSceneBase.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="CMyShader.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayer2.h" />
+    <ClInclude Include="CPlayerIdle.h" />
     <ClInclude Include="CPoint.h" />
     <ClInclude Include="CRectangle.h" />
     <ClInclude Include="CSceneBase.h" />
@@ -104,6 +106,7 @@
     <ClInclude Include="CShadowMap.h" />
     <ClInclude Include="CShadowShader.h" />
     <ClInclude Include="CSound.h" />
+    <ClInclude Include="CState.h" />
     <ClInclude Include="CTask.h" />
     <ClInclude Include="CTaskManager.h" />
     <ClInclude Include="CTexture.h" />

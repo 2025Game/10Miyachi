@@ -3,6 +3,7 @@
 #define CXPLAYER_H
 #include "CXCharacter.h"
 #include "CColliderLine.h"
+#include "CPlayerIdle.h"
 class CXPlayer : public CXCharacter
 {
 public:
@@ -14,6 +15,9 @@ public:
 	CXPlayer();
 	void Update() override;
 private:
+	EState mState; //ó‘Ô‚Ì•Û
+	CState* mpState; //ó‘Ôˆ—
+	std::unique_ptr<CPlayerIdle> mpIdle; //‘Ò‹@ó‘Ô
 	CColliderLine mColliderLine;
 };
 #endif
