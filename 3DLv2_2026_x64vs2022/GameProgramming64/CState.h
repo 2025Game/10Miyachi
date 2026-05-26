@@ -6,6 +6,7 @@ class CXCharacter;
 //ó‘Ô‚Ìí—Ş
 enum class EState
 {
+	EATTACK, //UŒ‚
 	ENONE, //ó‘Ô‚È‚µ
 	EIDLE, //‘Ò‹@
 	EWALK, //•à‚«

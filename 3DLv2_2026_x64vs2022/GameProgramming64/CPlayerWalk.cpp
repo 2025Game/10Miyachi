@@ -36,4 +36,8 @@ void CPlayerWalk::Update()
 		CVector r = mpParent->Rotation() + CVector(0.0f, +ROTATIONSPEED, 0.0f);
 		mpParent->Rotation(r);
 	}
+	if (mInput.Key('I'))
+	{
+		mState = EState::EATTACK;
+	}
 }

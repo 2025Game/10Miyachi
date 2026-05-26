@@ -16,6 +16,8 @@ CXPlayer::CXPlayer()
 	mState = mpState->State();
 	//•à‚­ó‘Ô‚Ìì¬
 	mpWalk = std::make_unique<CPlayerWalk>();
+	//UŒ‚ó‘Ô‚Ìì¬
+	mpAttack = std::make_unique<CPlayerAttack>();
 }
 
 void CXPlayer::Collision(CCollider* m, CCollider* o)
@@ -65,6 +67,9 @@ void CXPlayer::Update()
 			break;
 		case EState::EWALK:
 			mpState = mpWalk.get();
+			break;
+		case EState::EATTACK:
+			mpState = mpAttack.get();
 			break;
 		default:
 			break;

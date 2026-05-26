@@ -5,6 +5,7 @@
 #include "CColliderLine.h"
 #include "CPlayerIdle.h"
 #include "CPlayerWalk.h"
+#include "CPlayerAttack.h"
 class CXPlayer : public CXCharacter
 {
 public:
@@ -16,6 +17,7 @@ public:
 	CXPlayer();
 	void Update() override;
 private:
+	std::unique_ptr<CPlayerAttack> mpAttack; //UŒ‚ó‘Ô
 	std::unique_ptr<CPlayerWalk> mpWalk; //•à‚­ó‘Ô
 	EState mState; //ó‘Ô‚Ì•Û
 	CState* mpState; //ó‘Ôˆ—
