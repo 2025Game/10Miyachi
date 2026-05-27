@@ -40,4 +40,8 @@ void CPlayerWalk::Update()
 	{
 		mState = EState::EATTACK;
 	}
+	if (mInput.Key(VK_SPACE))
+	{
+		mState = EState::EJUMP;
+	}
 }
