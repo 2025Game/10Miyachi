@@ -33,6 +33,7 @@
     <ClCompile Include="CColliderMesh.cpp" />
     <ClCompile Include="CColliderTriangle.cpp" />
     <ClCompile Include="CCollisionManager.cpp" />
+    <ClCompile Include="CCube.cpp" />
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CEnemy2.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="CColliderMesh.h" />
     <ClInclude Include="CColliderTriangle.h" />
     <ClInclude Include="CCollisionManager.h" />
+    <ClInclude Include="CCube.h" />
     <ClInclude Include="CEffect.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CEnemy2.h" />
