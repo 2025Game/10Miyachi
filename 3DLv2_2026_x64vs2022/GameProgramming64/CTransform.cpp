@@ -35,6 +35,11 @@ void CTransform::Scale(const CVector& v)
 	mScale = v;
 }
 
+void CTransform::Parent(CTransform* parent)
+{
+	mpParent = parent;
+}
+
 const CMatrix& CTransform::Matrix() const
 {
 	return mMatrix;

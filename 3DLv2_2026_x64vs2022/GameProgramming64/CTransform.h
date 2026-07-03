@@ -7,6 +7,9 @@
 */
 class CTransform {
 public:
+	void Parent(CTransform* parent);
+	//Šgk‚Ìæ“¾
+	const CVector& Scale() const;
 	CTransform();
 	const CMatrix& CombinedMatrix() const;
 	const CVector& Rotation() const;
