@@ -7,6 +7,7 @@
 #include "CPlayerWalk.h"
 #include "CPlayerAttack.h"
 #include "CPlayerJump.h"
+#include "CColliderCapsule.h"
 class CXPlayer : public CXCharacter
 {
 public:
@@ -25,5 +26,6 @@ private:
 	CState* mpState; //ó‘Ôˆ—
 	std::unique_ptr<CPlayerIdle> mpIdle; //‘Ò‹@ó‘Ô
 	CColliderLine mColliderLine;
+	CColliderCapsule mColliderCapsule;
 };
 #endif

@@ -204,6 +204,9 @@
     <ClCompile Include="CTransform.cpp">
       <Filter>ソース ファイル\BaseSystem\Object</Filter>
     </ClCompile>
+    <ClCompile Include="CColliderCapsule.cpp">
+      <Filter>ソース ファイル\BaseSystem\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CApplication.h">
@@ -373,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="CTransform.h">
       <Filter>ソース ファイル\BaseSystem\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CColliderCapsule.h">
+      <Filter>ソース ファイル\BaseSystem\Collider</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
