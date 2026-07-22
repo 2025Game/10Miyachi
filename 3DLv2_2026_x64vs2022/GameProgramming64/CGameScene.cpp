@@ -6,6 +6,7 @@
 #include "CCollisionManager.h"
 #include "CCube.h"
 #include "CCamera.h"
+#include "CPaladin.h"
 
 //背景モデルデータの指定
 #define MODEL_BACKGROUND "res\\sky.obj", "res\\sky.mtl"
@@ -27,6 +28,7 @@ void CGameScene::Load()
 	CXPlayer* player = new CXPlayer();
 	player->Init(&mPlayer);
 	mColliderMesh.Set(nullptr, nullptr, &mBackGround);
+	CPaladin* paladin = new CPaladin(CVector(0.0f, 1.0f, -4.0f));
 	CCharacter3* cube = new CCube();
 	cube->Position(CVector(0.0f, 0.0f, -9.0f));
 	cube->Scale(CVector(10.0f, 0.5f, 10.0f));
