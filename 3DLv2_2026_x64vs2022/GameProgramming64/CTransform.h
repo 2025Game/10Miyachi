@@ -7,6 +7,7 @@
 */
 class CTransform {
 public:
+	CTransform* Parent();
 	void Parent(CTransform* parent);
 	//Šgk‚Ìæ“¾
 	const CVector& Scale() const;

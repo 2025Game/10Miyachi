@@ -5,6 +5,11 @@ CTransform::CTransform()
 	mpParent = nullptr;
 }
 
+CTransform* CTransform::Parent()
+{
+	return mpParent;
+}
+
 const CMatrix& CTransform::CombinedMatrix() const
 {
 	return mCombinedMatrix;

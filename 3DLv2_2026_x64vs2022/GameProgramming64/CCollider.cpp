@@ -1,6 +1,79 @@
 #include "CCollider.h"
 #include "CCollisionManager.h"
 
+//CalcCalcPointLineDist(点, 始点, 終点, 線上の最短点, 割合)
+//点と線(始点、終点を通る直線)の最短距離を求める
+float CalcPointLineDist(const CVector& p, const CVector& s, const CVector& e, CVector* mp, float* t)
+{
+	*t = 0.0f; //割合の初期化
+	CVector v = e - s; //始点から終点へのベクトルを求める
+	float dvv = v.Dot(v); //ベクトルの長さの2乗を求める
+	if (dvv > 0.0f)
+	{
+		*t = v.Dot(p - s) / dvv; //線上の垂線となる点の割合を求める
+	}
+	*mp = s + v * *t; //線上の垂線となる点を求める
+	return (p - *mp).Length(); //垂線の長さを返す
+}
+
+//CalcLineLineDist(始点1, 終点1, 始点2, 終点2, 交点1, 交点2, 比率1, 比率2)
+//2線間の最短距離を返す
+float CalcLineLineDist(
+	const CVector& s1, //始点1
+	const CVector& e1, //終点1
+	const CVector& s2, //始点2
+	const CVector& e2, //終点2
+	CVector* mp1, //交点1
+	CVector* mp2, //交点2
+	float* t1, //比率1
+	float* t2 //比率2
+)
+{
+	CVector v1 = e1 - s1;
+	CVector v2 = e2 - s2;
+	//2直線が平行
+	if (v1.Cross(v2).Length() < 0.000001f)
+	{
+		//線分1の始点から直線2までの最短距離問題に帰着する
+		*t1 = 0.0f;
+		*mp1 = s1;
+		float dist = CalcPointLineDist(*mp1, s2, e2, mp2, t2);
+		return dist;
+	}
+	//2直線が平行でない
+	float dv1v2 = v1.Dot(v2);
+	float dv1v1 = v1.Dot(v1);
+	float dv2v2 = v2.Dot(v2);
+	CVector vs2s1 = s1 - s2;
+	//比率1を求める
+	*t1 = (dv1v2 * v2.Dot(vs2s1) - dv2v2 * v1.Dot(vs2s1)) / (dv1v1 * dv2v2 - dv1v2 * dv1v2);
+	//交点1を求める
+	*mp1 = s1 + v1 * *t1;
+	//比率2を求める
+	*t2 = v2.Dot(*mp1 - s2) / dv2v2;
+	//交点2を求める
+	*mp2 = s2 + v2 * *t2;
+	//最短距離を返す
+	return (*mp2 - *mp1).Length();
+}
+
+bool CCollider::CollisionCapsuleCapsule(CCollider* m, CCollider* o, CVector* adjust)
+{
+	CVector mp1, mp2;
+	float t1, t2;
+	float radius = m->mRadius + o->mRadius;
+	*adjust = CVector();
+	if (CalcLineLineDist(m->mV[0], m->mV[1],
+		o->mV[0], o->mV[1], &mp1, &mp2, &t1, &t2) < radius)
+	{
+		*adjust = mp1 - mp2;
+		float len = radius - adjust->Length();
+		*adjust = adjust->Normalize() * len;
+		return true;
+	}
+	return false;
+}
+
 //三角形v0v1v2と線分svevが衝突していればtrueを返す
 bool FuncCollisionTriangleLine(
 	const CVector& v0, //三角形の頂点1
