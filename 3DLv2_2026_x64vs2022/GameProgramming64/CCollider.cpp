@@ -1,6 +1,13 @@
 #include "CCollider.h"
 #include "CCollisionManager.h"
 
+//0~1の間にクランプ(値を強制的にある範囲内にすること)
+void clamp0to1(float& v)
+{
+	if (v < 0.0f) v = 0.0f;
+	else if (v > 1.0f) v = 1.0f;
+}
+
 //CalcCalcPointLineDist(点, 始点, 終点, 線上の最短点, 割合)
 //点と線(始点、終点を通る直線)の最短距離を求める
 float CalcPointLineDist(const CVector& p, const CVector& s, const CVector& e, CVector* mp, float* t)
@@ -57,14 +64,60 @@ float CalcLineLineDist(
 	return (*mp2 - *mp1).Length();
 }
 
+//2線分間の最短距離
+float CalcSegmentSegmentDist
+(
+	const CVector& s1, const CVector& e1, //線分1
+	const CVector& s2, const CVector& e2, //線分2
+	CVector* mp1, //最短線の端点1(始点や終点になることもある)
+	CVector* mp2 //最短線の端点2(始点や終点になることもある)
+)
+
+{
+	float dist = 0, t1, t2;
+	//----------------------------------------------------------------
+	//とりあえず2直線間の最短距離,mp1,mp2,t1,t2を求めてみる
+	dist = CalcLineLineDist(s1, e1, s2, e2, mp1, mp2, &t1, &t2);
+	if (0.0f <= t1 && t1 <= 1.0f && 0.0f <= t2 && t2 <= 1.0f)
+	{
+		//mp1,mp2が両方とも線分内にあった
+		return dist;
+	}
+	//mp1,mp2の両方、またはどちらかが線分内になかったので次へ
+	//mp1,t1を求め直す ⇒
+	//t2を0~1にクランプしてmp2からs1.vに垂線を降ろしてみる
+	clamp0to1(t2);
+	*mp2 = s2 + (e2 - s2) * t2;
+	dist = CalcPointLineDist(*mp2, s1, e1, mp1, &t1);
+	if (0.0f <= t1 && t1 <= 1.0f)
+	{
+		//mp1が線分内にあった
+		return dist;
+	}
+	//mp1が線分内になかったので次へ
+	//mp2,t2を求め直す ⇒
+	//t1を0~1にクランプしてmp1からs2.vに垂線を降ろしてみる
+	clamp0to1(t1);
+	*mp1 = s1 + (e1 - s1) * t1;
+	dist = CalcPointLineDist(*mp1, s2, e2, mp2, &t2);
+	if (0.0f <= t2 && t2 <= 1.0f)
+	{
+		//mp2が線分内にあった
+		return dist;
+	}
+	//mp2が線分内になかったので次へ
+	//t2をクランプしてmp2を再計算すると、mp1からmp2までが最短
+	clamp0to1(t2);
+	*mp2 = s2 + (e2 - s2) * t2;
+	return (*mp2 - *mp1).Length();
+}
+
 bool CCollider::CollisionCapsuleCapsule(CCollider* m, CCollider* o, CVector* adjust)
 {
 	CVector mp1, mp2;
-	float t1, t2;
 	float radius = m->mRadius + o->mRadius;
 	*adjust = CVector();
-	if (CalcLineLineDist(m->mV[0], m->mV[1],
-		o->mV[0], o->mV[1], &mp1, &mp2, &t1, &t2) < radius)
+	if (CalcSegmentSegmentDist(m->mV[0], m->mV[1], o->mV[0], o->mV[1], &mp1, &mp2) < radius)
 	{
 		*adjust = mp1 - mp2;
 		float len = radius - adjust->Length();
