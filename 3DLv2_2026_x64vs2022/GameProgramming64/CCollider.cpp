@@ -112,6 +112,147 @@ float CalcSegmentSegmentDist
 	return (*mp2 - *mp1).Length();
 }
 
+//点と三角形の面への射影(内部判定つき)
+//p:点
+//a,b,c:三角形の頂点
+//outProj:射影点(pから三角形を含む面への垂線との交点座標)
+//返り値:true:点が三角形の面内にある場合、false:点が三角形の面外にある場合
+inline bool ProjectPointOnTriangle(const CVector& p, const CVector& a, const CVector& b, const CVector& c, CVector& outProj)
+{
+	CVector ab = b - a;
+	CVector ac = c - a;
+	CVector ap = p - a;
+	float d00 = ab.Dot(ab);
+	float d01 = ab.Dot(ac);
+	float d11 = ac.Dot(ac);
+	float d20 = ap.Dot(ab);
+	float d21 = ap.Dot(ac);
+	float denom = d00 * d11 - d01 * d01;
+	if (denom == 0.0f) return false; // 退化三角形
+	float v = (d11 * d20 - d01 * d21) / denom;
+	float w = (d00 * d21 - d01 * d20) / denom;
+	float u = 1.0f - v - w;
+	//全て0以上なら点は三角形の面内
+	if (u >= 0 && v >= 0 && w >= 0)
+	{
+		outProj = a * u + b * v + c * w;
+		return true;
+	}
+	outProj = a * u + b * v + c * w;
+	return false;
+}
+
+//線分 vs 三角形(面距離)
+//outSegPoint:線分側の最近接点
+//outTriPoint:三角形側の最近接点
+//返り値:距離の2乗(衝突している場合は0)
+inline float SegmentTriangleDistanceSq(const CVector& p0, const CVector& p1, float cr, const CVector& a, const CVector& b, const CVector& c, CVector& outSegPoint, CVector& outTriPoint)
+{
+	CVector segDir = p1 - p0; //線分の向き
+	// 1. 線分を無限直線として三角形面と交差するか
+	CVector n = (b - a).Cross(c - a);
+	float denom = n.Dot(segDir);
+	//線分が三角形面に平行ではない?
+	if (fabsf(denom) > 1e-6f)
+	{
+		float dot = n.Dot(a - p0);
+		float t = dot / denom;
+		//線分は三角形面を貫く?
+		if (t >= 0.0f && t <= 1.0f)
+		{
+			//面との交点p
+			CVector p = p0 + segDir * t;
+			CVector proj;
+			//交点が三角形内か?
+			if (ProjectPointOnTriangle(p, a, b, c, proj))
+			{
+				//p0が面の裏か?
+				if (dot >= 0.0f)
+					outSegPoint = p0;
+				else
+					outSegPoint = p1;
+				//面の交点を設定
+				outTriPoint = proj;
+				return 0.0f; // 交差の場合は距離0
+			}
+		}
+		else
+		{ //貫いてない時
+			CVector proj0, proj1;
+			n.Normalize();
+			//p0と三角形面までの距離s
+			float s = n.Dot(p0 - a);
+			//点p0が三角形内か?
+			if (ProjectPointOnTriangle(p0, a, b, c, proj0))
+			{
+				//p1と三角形面までの距離t
+				float t = n.Dot(p1 - a);
+				//点p1が三角形内か?
+				if (ProjectPointOnTriangle(p1, a, b, c, proj1))
+				{
+					//面までの距離が近い方を採用
+					if (s < t)
+					{
+						outSegPoint = p0;
+						outTriPoint = proj0;
+					}
+					else
+					{
+						outSegPoint = p1;
+						outTriPoint = proj1;
+					}
+					//点と三角形との距離の2乗を求め、半径より距離が小さければ距離の2乗を戻す
+					float sq = (outSegPoint - outTriPoint).Dot(outSegPoint - outTriPoint);
+					if (sq <= cr * cr)
+						return sq;
+
+				}
+				else
+				{ //p1が三角形外の場合、p0を採用
+					outSegPoint = p0;
+					outTriPoint = proj0;
+					float sq = (outSegPoint - outTriPoint).Dot(outSegPoint - outTriPoint);
+					if (sq <= cr * cr)
+						return sq;
+
+				}
+			}
+			else
+			{
+				float t = n.Dot(p1 - a);
+				if (ProjectPointOnTriangle(p1, a, b, c, proj1))
+				{
+					outSegPoint = p1;
+					outTriPoint = proj1;
+					float sq = (outSegPoint - outTriPoint).Dot(outSegPoint - outTriPoint);
+					if (sq <= cr * cr)
+						return sq;
+				}
+			}
+		}
+	}
+	// 2. 面内に落ちない → エッジ距離で決まる
+	float best = FLT_MAX;
+	//ラムダ式
+	//線分p0p1と線分e0e1の最短距離をbestに保存する
+	auto testEdge = [&](const CVector& e0, const CVector& e1)
+		{
+		CVector s, t;
+		float d = CalcSegmentSegmentDist(p0, p1, e0, e1, &s, &t);
+		float dsq = (s - t).Dot(s - t);
+		if (dsq < best)
+		{
+			best = dsq;
+			outSegPoint = s;
+			outTriPoint = t;
+		}
+		};
+	testEdge(a, b);
+	testEdge(b, c);
+	testEdge(c, a);
+	return best;
+}
+
 bool CCollider::CollisionCapsuleCapsule(CCollider* m, CCollider* o, CVector* adjust)
 {
 	CVector mp1, mp2;
@@ -125,6 +266,66 @@ bool CCollider::CollisionCapsuleCapsule(CCollider* m, CCollider* o, CVector* adj
 		return true;
 	}
 	return false;
+}
+
+bool CCollider::CollisionTriangleCapsule(const CVector& t0, const CVector& t1, const CVector& t2, const CVector& cs, const CVector& ce, float cr, CVector* adjust)
+{
+	CVector pointCaps, pointTri;
+	// 線分 vs 三角形の最近接点を取得
+	float distSq = SegmentTriangleDistanceSq(cs, ce, cr, t0, t1, t2, pointCaps,	pointTri);
+	//半径より遠いので当たってない
+	if (distSq >= cr * cr)
+	{
+		*adjust = CVector();
+		return false;
+	}
+	// 最近接点間の距離
+	CVector diff;
+	// penetration depth
+	float penetration;
+	float dist;
+	if (distSq == 0.0f)
+	{
+		diff = pointTri - pointCaps;
+		dist = diff.Length();
+		penetration = dist + cr;
+	}
+	else
+	{
+		diff = pointCaps - pointTri;
+		dist = diff.Length();
+		penetration = cr - dist;
+	}
+	// 押し戻し方向
+	CVector dir;
+	if (dist > 1e-6f)
+	{
+		// 最近接点の差分方向(最も安定)
+		dir = diff * (1.0f / dist);
+	}
+	else
+	{
+		// 退避:三角形の法線方向
+		CVector triN = (t1 - t0).Cross(t2 - t0);
+		if (triN.Dot(triN) > 1e-6f)
+			dir = triN.Normalize();
+		else
+			dir = CVector(0.0f, 1.0f, 0.0f); // 完全退化三角形
+
+	}
+	// 最終押し戻しベクトル
+	*adjust = dir * penetration;
+	return true;
+}
+
+bool CCollider::CollisionTriangleCapsule(CCollider* triangle, CCollider* c, CVector* adjust)
+{
+	CVector v0, v1, v2;
+	//各コライダの頂点をワールド座標へ変換
+	v0 = triangle->mV[0] * *triangle->mpMatrix;
+	v1 = triangle->mV[1] * *triangle->mpMatrix;
+	v2 = triangle->mV[2] * *triangle->mpMatrix;
+	return CollisionTriangleCapsule(v0, v1, v2, c->mV[0], c->mV[1], c->mRadius, adjust);
 }
 
 //三角形v0v1v2と線分svevが衝突していればtrueを返す

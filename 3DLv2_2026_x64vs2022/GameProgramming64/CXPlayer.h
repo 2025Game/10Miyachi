@@ -2,7 +2,6 @@
 #ifndef CXPLAYER_H
 #define CXPLAYER_H
 #include "CXCharacter.h"
-#include "CColliderLine.h"
 #include "CPlayerIdle.h"
 #include "CPlayerWalk.h"
 #include "CPlayerAttack.h"
@@ -25,7 +24,6 @@ private:
 	EState mState; //ó‘Ô‚Ì•Û
 	CState* mpState; //ó‘Ôˆ—
 	std::unique_ptr<CPlayerIdle> mpIdle; //‘Ò‹@ó‘Ô
-	CColliderLine mColliderLine;
 	CColliderCapsule mColliderCapsule;
 };
 #endif

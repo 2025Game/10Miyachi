@@ -11,8 +11,7 @@
 const float RAD_TO_DEG = 180.0f / (float)M_PI;
 
 CXPlayer::CXPlayer()
-	: mColliderLine(this, &mMatrix, CVector(0.0f, 3.5f, 0.0f), CVector(0.0f, 0.0f, 0.0f))
-	, mColliderCapsule(this, &mMatrix, CVector(0.0f, 3.5f, 0.0f), CVector(0.0f, 0.0f, 0.0f), 0.5f)
+	: mColliderCapsule(this, &mCombinedMatrix, CVector(0.0f, 3.5f, 0.0f), CVector(0.0f, 0.0f, 0.0f), 0.5f)
 {
 	mPosition = CVector(1.0f, 0.0f, 0.0f);
 	//待機状態の作成
@@ -38,37 +37,7 @@ void CXPlayer::Collision(CCollider* m, CCollider* o)
 	mpState->Collision(m, o);
 	//自身のコライダタイプの判定
 	switch (m->Type())
-	{
-	case CCollider::EType::ELINE://線分コライダ
-		//相手のコライダが三角コライダの時
-		if (o->Type() == CCollider::EType::ETRIANGLE)
-		{
-			CVector adjust;//調整用ベクトル
-			//三角形と線分の衝突判定
-			if (CCollider::CollisionTriangleLine(o, m, &adjust))
-			{
-				//位置の更新
-				//現在のワールドでの位置
-				mPosition = (CVector() * mMatrix + adjust);
-				//前方の位置を求める
-				CVector forward = (CVector(0.0f, 0.0f, 1.0f) * mMatrix + adjust);
-				if (o->Parent())
-				{
-					//親のローカル座標へ変換
-					mPosition = mPosition * o->Parent()->CombinedMatrix().Inverse();
-					//親のローカル座標へ変換
-					forward = forward * o->Parent()->CombinedMatrix().Inverse();
-				}
-				forward = forward - mPosition;
-				float rotY = atan2f(forward.X(), forward.Z()) * RAD_TO_DEG;
-				mRotation.Y(rotY);
-				//親の設定
-				mpParent = o->Parent();
-				//行列の更新
-				CTransform::Update();
-			}
-		}
-		break;
+	{	
 	case CCollider::EType::ECAPSULE:
 	{
 		if (o->Type() == CCollider::EType::ECAPSULE)
@@ -89,6 +58,27 @@ void CXPlayer::Collision(CCollider* m, CCollider* o)
 				CTransform::Update();
 			}
 		}
+
+		if (o->Type() == CCollider::EType::ETRIANGLE)
+		{
+			CVector adjust;//調整用ベクトル
+			if (CCollider::CollisionTriangleCapsule(o, m, &adjust))
+			{
+				mPosition = CVector() * mMatrix + adjust;
+				CVector forward = (CVector(0.0f, 0.0f, 1.0f) * mMatrix + adjust);
+				if (o->Parent())
+				{
+					mPosition =	mPosition *	o->Parent()->CombinedMatrix().Inverse();
+
+					forward = forward *	o->Parent()->CombinedMatrix().Inverse();
+				}
+				forward = forward - mPosition;
+				float rotY = atan2f(forward.X(), forward.Z()) * RAD_TO_DEG;
+				mRotation.Y(rotY);
+				mpParent = o->Parent();
+				CTransform::Update();
+			}
+		}
 	}
 	break;
 	}
@@ -97,10 +87,6 @@ void CXPlayer::Collision(CCollider* m, CCollider* o)
 //衝突処理
 void CXPlayer::Collision()
 {
-	//コライダの優先度変更
-	mColliderLine.ChangePriority();
-	//衝突処理を実行
-	CCollisionManager::Instance()->Collision(&mColliderLine, COLLISIONRANGE);
 	mColliderCapsule.ChangePriority();
 	CCollisionManager::Instance()->Collision(&mColliderCapsule, COLLISIONRANGE);
 }
