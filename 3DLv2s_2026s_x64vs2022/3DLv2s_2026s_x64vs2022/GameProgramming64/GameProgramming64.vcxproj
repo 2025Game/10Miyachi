@@ -41,6 +41,7 @@
     <ClCompile Include="CMaterial.cpp" />
     <ClCompile Include="CMatrix.cpp" />
     <ClCompile Include="CModel.cpp" />
+    <ClCompile Include="CModelX.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CPlayer2.cpp" />
     <ClCompile Include="CPoint.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="CMatrix.h" />
     <ClInclude Include="CMiss.h" />
     <ClInclude Include="CModel.h" />
+    <ClInclude Include="CModelX.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CPlayer2.h" />
     <ClInclude Include="CPoint.h" />

@@ -14,6 +14,7 @@
 #include "CTaskManager.h"
 #include "CColliderTriangle.h"
 #include "CColliderMesh.h"
+#include "CModelX.h"
 
 class CApplication
 {
@@ -42,6 +43,7 @@ public:
 	//繰り返し実行するプログラム
 	void Update();
 private:
+	CModelX mModelX;
 	static CUi* spUi;	//UIクラスのポインタ
 
 	//モデルからコライダを生成
