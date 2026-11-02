@@ -6,6 +6,9 @@
 */
 class CMatrix {
 public:
+	//—v‘f”‚Ìæ“¾
+	int Size();
+
 	//‹ts—ñæ“¾
 	CMatrix Transpose() const;
 
