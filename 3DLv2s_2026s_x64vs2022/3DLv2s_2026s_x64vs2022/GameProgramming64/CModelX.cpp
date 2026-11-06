@@ -226,7 +226,11 @@ CModelXFrame::CModelXFrame(CModelX* model)
 	for (int i = 0; i < mTransformMatrix.Size(); i++)
 	{
 		printf("%f ", mTransformMatrix.M()[i]);
+
+		if ((i + 1) % 4 == 0)
+		{
+			printf("\n");
+		}
 	}
-	printf("\n");
 #endif
 }
