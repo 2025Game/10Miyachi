@@ -70,6 +70,21 @@ void CVector::Set(float x, float y, float z)
 	mZ = z;
 }
 
+void CVector::X(float f)
+{
+	mX = f;
+}
+
+void CVector::Y(float f)
+{
+	mY = f;
+}
+
+void CVector::Z(float f)
+{
+	mZ = f;
+}
+
 float CVector::X() const
 {
 	return mX;

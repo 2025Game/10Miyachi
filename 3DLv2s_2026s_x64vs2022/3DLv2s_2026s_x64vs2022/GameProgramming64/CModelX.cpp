@@ -27,13 +27,6 @@ bool CModelX::IsDelimiter(char c)
 	return false;
 }
 
-CModelX::CModelX()
-	: mpPointer(nullptr)
-{
-	//mTokenを初期化
-	memset(mToken, 0, sizeof(mToken));
-}
-
 void CModelX::Load(const char* file)
 {
 	//
@@ -122,6 +115,11 @@ char* CModelX::GetToken()
 	return mToken;
 }
 
+char* CModelX::Token()
+{
+	return mToken;
+}
+
 CModelXFrame::~CModelXFrame()
 {
 	//子フレームを全て解放する
@@ -132,6 +130,17 @@ CModelXFrame::~CModelXFrame()
 	}
 	//名前のエリアを解放する
 	SAFE_DELETE_ARRAY(mpName);
+	if (mpMesh != nullptr)
+	{
+		delete mpMesh;
+	}
+}
+
+CModelX::CModelX()
+	: mpPointer(nullptr)
+{
+	//mTokenを初期化
+	memset(mToken, 0, sizeof(mToken));
 }
 
 CModelX::~CModelX()
@@ -139,6 +148,51 @@ CModelX::~CModelX()
 	if (mFrame.size() > 0)
 	{
 		delete mFrame[0];
+	}
+}
+
+//コンストラクタ
+CMesh::CMesh()
+	: mVertexNum(0)
+	, mpVertex(nullptr)
+{
+}
+
+//デストラクタ
+CMesh::~CMesh()
+{
+	SAFE_DELETE_ARRAY(mpVertex);
+}
+
+/*
+ Init
+ Meshのデータを取り込む
+*/
+void CMesh::Init(CModelX* model)
+{
+	model->GetToken();	// { or 名前
+	if (!strchr(model->Token(), '{'))
+	{
+		//名前の場合、次が{
+		model->GetToken();	// {
+	}
+
+	//頂点数の取得
+	mVertexNum = atoi(model->GetToken());
+	//頂点数分エリア確保
+	mpVertex = new CVector[mVertexNum];
+	//頂点数分データを取り込む
+	for (int i = 0; i < mVertexNum; i++)
+	{
+		mpVertex[i].X(atof(model->GetToken()));
+		mpVertex[i].Y(atof(model->GetToken()));
+		mpVertex[i].Z(atof(model->GetToken()));
+	}
+
+	printf("Vertex Num: %d\n", mVertexNum);
+	for (int i = 0; i < mVertexNum; i++)
+	{
+		printf("%10f %10f %10f\n",mpVertex[i].X(),mpVertex[i].Y(),mpVertex[i].Z());
 	}
 }
 
@@ -177,6 +231,7 @@ void CModelX::SkipNode()
 CModelXFrame::CModelXFrame(CModelX* model)
 	: mpName(nullptr)
 	, mIndex(0)
+	, mpMesh(nullptr)
 {
 	//現在のフレーム配列の要素数を取得し設定する
 	mIndex = model->mFrame.size();
@@ -214,6 +269,11 @@ CModelXFrame::CModelXFrame(CModelX* model)
 			}
 			model->GetToken(); // }
 		}
+		else if (strcmp(model->mToken, "Mesh") == 0)
+		{
+			mpMesh = new CMesh();
+			mpMesh->Init(model);
+		}
 		else
 		{
 			//上記以外の要素は読み飛ばす
@@ -225,7 +285,7 @@ CModelXFrame::CModelXFrame(CModelX* model)
 	printf("%s\n", mpName);
 	for (int i = 0; i < mTransformMatrix.Size(); i++)
 	{
-		printf("%f ", mTransformMatrix.M()[i]);
+		printf("%10f ", mTransformMatrix.M()[i]);
 
 		if ((i + 1) % 4 == 0)
 		{
