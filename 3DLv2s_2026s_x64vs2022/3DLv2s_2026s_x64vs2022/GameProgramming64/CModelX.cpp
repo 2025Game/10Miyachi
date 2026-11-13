@@ -155,6 +155,8 @@ CModelX::~CModelX()
 CMesh::CMesh()
 	: mVertexNum(0)
 	, mpVertex(nullptr)
+	, mFaceNum(0)
+	, mpVertexIndex(nullptr)
 {
 }
 
@@ -162,6 +164,7 @@ CMesh::CMesh()
 CMesh::~CMesh()
 {
 	SAFE_DELETE_ARRAY(mpVertex);
+	SAFE_DELETE_ARRAY(mpVertexIndex);
 }
 
 /*
@@ -189,10 +192,28 @@ void CMesh::Init(CModelX* model)
 		mpVertex[i].Z(atof(model->GetToken()));
 	}
 
-	printf("Vertex Num: %d\n", mVertexNum);
+	//ñ êîì«Ç›çûÇ›
+	mFaceNum = atoi(model->GetToken());
+	//í∏ì_êîÇÕ1ñ Ç…3í∏ì_
+	mpVertexIndex = new int[mFaceNum * 3];
+	for (int i = 0; i < mFaceNum * 3; i += 3)
+	{
+		model->GetToken();	//í∏ì_êîì«Ç›îÚÇŒÇµ
+		mpVertexIndex[i] = atoi(model->GetToken());
+		mpVertexIndex[i + 1] = atoi(model->GetToken());
+		mpVertexIndex[i + 2] = atoi(model->GetToken());
+	}
+
+	printf("VertexNum:%d\n", mVertexNum);
 	for (int i = 0; i < mVertexNum; i++)
 	{
 		printf("%10f %10f %10f\n",mpVertex[i].X(),mpVertex[i].Y(),mpVertex[i].Z());
+	}
+
+	printf("FaceNum:%d\n", mFaceNum);
+	for (int i = 0; i < mFaceNum * 3; i += 3)
+	{
+		printf("%2d %2d %2d\n",mpVertexIndex[i],mpVertexIndex[i + 1],mpVertexIndex[i + 2]);
 	}
 }
 
