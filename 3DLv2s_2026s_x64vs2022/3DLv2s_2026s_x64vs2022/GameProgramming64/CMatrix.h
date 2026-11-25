@@ -56,7 +56,7 @@ public:
 	//表示確認用
 	//4×4の行列を画面出力
 	void Print();
-private:
+private:	
 	//4×4の行列データを設定
 	float mM[4][4];
 };

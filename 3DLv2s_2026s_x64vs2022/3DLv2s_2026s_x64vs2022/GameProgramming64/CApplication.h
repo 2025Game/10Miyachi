@@ -43,6 +43,7 @@ public:
 	//繰り返し実行するプログラム
 	void Update();
 private:
+	CMatrix mMatrix;
 	CModelX mModelX;
 	static CUi* spUi;	//UIクラスのポインタ
 
